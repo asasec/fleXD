@@ -23,6 +23,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions options: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FLEXManager.shared.isNetworkDebuggingEnabled = true
 
+        // Show off custom global entries with a custom SF Symbol and tile color
+        FLEXManager.shared.registerGlobalEntry(
+            withName: "Bob",
+            symbolName: "person.crop.circle.fill",
+            iconColor: .systemMint
+        ) { Person.bob() }
+
         // Add at least one custom user defaults key to explore
         UserDefaults.standard.set("foo", forKey: "FLEXamplePrefFoo")
 

@@ -54,6 +54,13 @@
 #pragma mark - Globals Screen Entries
 
 - (void)registerGlobalEntryWithName:(NSString *)entryName objectFutureBlock:(id (^)(void))objectFutureBlock {
+    [self registerGlobalEntryWithName:entryName symbolName:nil iconColor:nil objectFutureBlock:objectFutureBlock];
+}
+
+- (void)registerGlobalEntryWithName:(NSString *)entryName
+                         symbolName:(NSString *)symbolName
+                          iconColor:(UIColor *)iconColor
+                  objectFutureBlock:(id (^)(void))objectFutureBlock {
     NSParameterAssert(entryName);
     NSParameterAssert(objectFutureBlock);
     NSAssert(NSThread.isMainThread, @"This method must be called from the main thread.");
@@ -64,11 +71,20 @@
     } viewControllerFuture:^UIViewController *{
         return [FLEXObjectExplorerFactory explorerViewControllerForObject:objectFutureBlock()];
     }];
+    entry.symbolName = symbolName;
+    entry.iconColor = iconColor;
 
     [self.userGlobalEntries addObject:entry];
 }
 
 - (void)registerGlobalEntryWithName:(NSString *)entryName viewControllerFutureBlock:(UIViewController * (^)(void))viewControllerFutureBlock {
+    [self registerGlobalEntryWithName:entryName symbolName:nil iconColor:nil viewControllerFutureBlock:viewControllerFutureBlock];
+}
+
+- (void)registerGlobalEntryWithName:(NSString *)entryName
+                         symbolName:(NSString *)symbolName
+                          iconColor:(UIColor *)iconColor
+          viewControllerFutureBlock:(UIViewController * (^)(void))viewControllerFutureBlock {
     NSParameterAssert(entryName);
     NSParameterAssert(viewControllerFutureBlock);
     NSAssert(NSThread.isMainThread, @"This method must be called from the main thread.");
@@ -81,11 +97,20 @@
         NSCAssert(viewController, @"'%@' entry returned nil viewController. viewControllerFutureBlock should never return nil.", entryName);
         return viewController;
     }];
+    entry.symbolName = symbolName;
+    entry.iconColor = iconColor;
 
     [self.userGlobalEntries addObject:entry];
 }
 
 - (void)registerGlobalEntryWithName:(NSString *)entryName action:(FLEXGlobalsEntryRowAction)rowSelectedAction {
+    [self registerGlobalEntryWithName:entryName symbolName:nil iconColor:nil action:rowSelectedAction];
+}
+
+- (void)registerGlobalEntryWithName:(NSString *)entryName
+                         symbolName:(NSString *)symbolName
+                          iconColor:(UIColor *)iconColor
+                             action:(FLEXGlobalsEntryRowAction)rowSelectedAction {
     NSParameterAssert(entryName);
     NSParameterAssert(rowSelectedAction);
     NSAssert(NSThread.isMainThread, @"This method must be called from the main thread.");
@@ -94,6 +119,8 @@
     FLEXGlobalsEntry *entry = [FLEXGlobalsEntry entryWithNameFuture:^NSString * _Nonnull{
         return entryName;
     } action:rowSelectedAction];
+    entry.symbolName = symbolName;
+    entry.iconColor = iconColor;
 
     [self.userGlobalEntries addObject:entry];
 }

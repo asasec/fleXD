@@ -16,6 +16,9 @@
 
 - (void)setUp {
     [super setUp];
+    // Abort the test on the first failed assert; lastRegisteredEntry relies on
+    // this to stop tests before they invoke a block property on a nil entry.
+    self.continueAfterFailure = NO;
     [FLEXManager.sharedManager clearGlobalEntries];
 }
 
@@ -25,7 +28,9 @@
 }
 
 - (FLEXGlobalsEntry *)lastRegisteredEntry {
-    return FLEXManager.sharedManager.userGlobalEntries.lastObject;
+    FLEXGlobalsEntry *entry = FLEXManager.sharedManager.userGlobalEntries.lastObject;
+    XCTAssertNotNil(entry, @"registration did not add an entry to userGlobalEntries");
+    return entry;
 }
 
 #pragma mark - Symbol and color registration

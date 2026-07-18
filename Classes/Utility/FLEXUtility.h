@@ -54,6 +54,10 @@
 
 /// The first active `UIWindowScene` of the app.
 @property (nonatomic, readonly, class) UIWindowScene *activeScene;
+
+/// The host app's user-facing name: the display name if one is set,
+/// otherwise the bundle name, otherwise the executable name.
+@property (nonatomic, readonly, class) NSString *applicationName;
 /// @return top-most view controller of the given window
 + (UIViewController *)topViewControllerInWindow:(UIWindow *)window;
 

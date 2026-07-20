@@ -68,7 +68,7 @@
 + (NSString *)globalsTitleForSection:(FLEXGlobalsSectionKind)section {
     switch (section) {
         case FLEXGlobalsSectionCustom:
-            return @"Custom Additions";
+            return [NSString stringWithFormat:@"%@ Settings", FLEXUtility.applicationName];
         case FLEXGlobalsSectionProcessAndEvents:
             return @"Process and Events";
         case FLEXGlobalsSectionAppShortcuts:

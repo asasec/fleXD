@@ -53,6 +53,16 @@ NS_ASSUME_NONNULL_BEGIN
 /// You may want to use __weak references.
 - (void)registerGlobalEntryWithName:(NSString *)entryName objectFutureBlock:(id (^)(void))objectFutureBlock;
 
+/// Same as \c registerGlobalEntryWithName:objectFutureBlock: but with a custom icon.
+/// @param symbolName An SF Symbol name to display inside the entry's icon square.
+/// Pass nil for an empty square.
+/// @param iconColor The background color of the entry's icon square.
+/// Pass nil for a color chosen automatically from the entry name.
+- (void)registerGlobalEntryWithName:(NSString *)entryName
+                         symbolName:(nullable NSString *)symbolName
+                          iconColor:(nullable UIColor *)iconColor
+                  objectFutureBlock:(id (^)(void))objectFutureBlock;
+
 /// Adds an entry at the top of the list of Global State items.
 /// Call this method before this view controller is displayed.
 /// @param entryName The string to be displayed in the cell.
@@ -65,6 +75,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)registerGlobalEntryWithName:(NSString *)entryName
           viewControllerFutureBlock:(UIViewController * (^)(void))viewControllerFutureBlock;
 
+/// Same as \c registerGlobalEntryWithName:viewControllerFutureBlock: but with a custom icon.
+/// @param symbolName An SF Symbol name to display inside the entry's icon square.
+/// Pass nil for an empty square.
+/// @param iconColor The background color of the entry's icon square.
+/// Pass nil for a color chosen automatically from the entry name.
+- (void)registerGlobalEntryWithName:(NSString *)entryName
+                         symbolName:(nullable NSString *)symbolName
+                          iconColor:(nullable UIColor *)iconColor
+          viewControllerFutureBlock:(UIViewController * (^)(void))viewControllerFutureBlock;
+
 /// Adds an entry at the top of the list of Global State items.
 /// @param entryName The string to be displayed in the cell.
 /// @param rowSelectedAction When you tap on the row, this block will be invoked
@@ -74,6 +94,16 @@ NS_ASSUME_NONNULL_BEGIN
 /// @note The passed block will be copied and retained for the duration of the application.
 /// You may want to use __weak references as needed.
 - (void)registerGlobalEntryWithName:(NSString *)entryName action:(FLEXGlobalsEntryRowAction)rowSelectedAction;
+
+/// Same as \c registerGlobalEntryWithName:action: but with a custom icon.
+/// @param symbolName An SF Symbol name to display inside the entry's icon square.
+/// Pass nil for an empty square.
+/// @param iconColor The background color of the entry's icon square.
+/// Pass nil for a color chosen automatically from the entry name.
+- (void)registerGlobalEntryWithName:(NSString *)entryName
+                         symbolName:(nullable NSString *)symbolName
+                          iconColor:(nullable UIColor *)iconColor
+                             action:(FLEXGlobalsEntryRowAction)rowSelectedAction;
 
 /// Removes all registered global entries.
 - (void)clearGlobalEntries;

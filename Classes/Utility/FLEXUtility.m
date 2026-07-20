@@ -219,7 +219,11 @@ BOOL FLEXConstructorsShouldRun(void) {
 }
 
 + (NSString *)applicationName {
-    return FLEXUtility.applicationImageName.lastPathComponent;
+    NSBundle *bundle = NSBundle.mainBundle;
+    return bundle.localizedInfoDictionary[@"CFBundleDisplayName"] ?:
+           bundle.infoDictionary[@"CFBundleDisplayName"] ?:
+           bundle.infoDictionary[@"CFBundleName"] ?:
+           FLEXUtility.applicationImageName.lastPathComponent;
 }
 
 + (NSString *)pointerToString:(void *)ptr {

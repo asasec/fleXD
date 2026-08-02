@@ -106,6 +106,36 @@ pod 'fleXD'
 
 Remember to exclude fleXD from your Release (App Store) builds — see [below](#excluding-flex-from-release-app-store-builds).
 
+## Excluding FLEX from Release (App Store) Builds
+
+FLEX exposes the internals of your app to anyone holding the device, and it relies on many private APIs — shipping it to the App Store risks rejection and is forbidden by the license. Only link it into Debug builds, and make sure every call to it compiles out of Release builds.
+
+### CocoaPods
+
+CocoaPods can handle both automatically by restricting the pod to the Debug configuration:
+
+```ruby
+pod 'fleXD', :configurations => ['Debug']
+```
+
+### Swift Package Manager
+
+Swift Package Manager has no way to restrict a dependency to a single build configuration, so wrap everything that touches FLEX in `#if DEBUG`:
+
+```swift
+#if DEBUG
+import FLEX
+#endif
+
+func showDebugMenu() {
+    #if DEBUG
+    FLEXManager.shared.showExplorer()
+    #endif
+}
+```
+
+This compiles all of your FLEX usage out of Release builds, but Xcode will still *link* the framework into them. If you need your production binary completely free of FLEX, use the CocoaPods configuration above, or only add the package product to a separate target (or white-labeled app variant) that never ships.
+
 ### Manual
 
 Manually add the files in `Classes/` to your Xcode project, or just drag in the entire `FLEX/` folder. Be sure to exclude FLEX from `Release` builds or your app will be rejected.

@@ -79,10 +79,10 @@
                          rowIDs:(nullable NSArray<NSString *> *)rowIDs
                       tableName:(nullable NSString *)tableName
                        database:(nullable id<FLEXDatabaseManager>)databaseManager {
-    // Must supply all optional parameters as one, or none
-    BOOL all = rowIDs && tableName && databaseManager;
-    BOOL none = !rowIDs && !tableName && !databaseManager;
-    NSParameterAssert(all || none);
+    // Row IDs are only meaningful with a table and manager to delete from.
+    // A manager without row IDs is still browsable; Realm databases
+    // cannot supply row IDs at all
+    NSParameterAssert(!rowIDs || (tableName && databaseManager));
 
     self = [super init];
     if (self) {
@@ -203,8 +203,7 @@
         });
 
         // Option to delete row
-        BOOL hasRowID = self.rows.count && row < self.rows.count;
-        if (hasRowID && self.canRefresh) {
+        if ([self canDeleteRowAtIndex:row]) {
             make.button(@"Delete").destructiveStyle().handler(^(NSArray<NSString *> *strings) {
                 NSString *deleteRow = [NSString stringWithFormat:
                     @"DELETE FROM %@ WHERE rowid = %@",
@@ -345,6 +344,12 @@
 }
 
 #pragma mark - Helpers
+
+- (BOOL)canDeleteRowAtIndex:(NSInteger)row {
+    // Deletion builds a DELETE statement from the row's ID; managers
+    // like Realm cannot supply row IDs, so their rows cannot be deleted
+    return row >= 0 && row < (NSInteger)self.rowIDs.count && self.canRefresh;
+}
 
 - (void)executeStatementAndShowResult:(NSString *)statement
                            completion:(void (^_Nullable)(BOOL success))completion {

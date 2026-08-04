@@ -34,7 +34,7 @@ static void FLEXRuntimeSafteyInit(void) {
     FLEXKnownUnsafeIvars = CFSetCreate(
         kCFAllocatorDefault,
         (const void **)unsafeIvars,
-        sizeof(unsafeIvars),
+        sizeof(unsafeIvars) / sizeof(Ivar),
         nil
     );
 }

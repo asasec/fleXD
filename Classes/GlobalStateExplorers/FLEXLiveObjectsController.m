@@ -117,7 +117,8 @@ static const NSInteger kFLEXLiveObjectsSortBySizeIndex = 2;
     self.instanceCountsForClassNames = mutableCountsForClassNames;
     self.instanceSizesForClassNames = mutableSizesForClassNames;
 
-    [self updateSearchResults:nil];
+    // Keep filtering by whatever is still in the search bar
+    [self updateSearchResults:self.searchText];
 }
 
 - (void)refreshControlDidRefresh:(id)sender {

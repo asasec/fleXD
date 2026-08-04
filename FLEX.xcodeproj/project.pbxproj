@@ -390,6 +390,7 @@
 		D92494BC80E826263BC7D0C6 /* FLEXNotificationRecorderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E095C18CF8FCF6DDB87B337 /* FLEXNotificationRecorderTests.m */; };
 		D9C33DC9E8C61D77A96EC73C /* FLEXGlobalsEntryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DC851F5C8E2DE3FB9CEF81EE /* FLEXGlobalsEntryTests.m */; };
 		9AAB575CDDE54DF9BDD5BBBC /* FLEXTableContentViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CCDDBE96FEF47E99DB7B576 /* FLEXTableContentViewControllerTests.m */; };
+		5990F23834374C13974443BD /* FLEXRuntimeSafetyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0E33BA24554C24A15D4774 /* FLEXRuntimeSafetyTests.m */; };
 		F64B47843AF0E12643987357 /* FLEXNotificationMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADDB715AC3846870448502F /* FLEXNotificationMonitor.m */; };
 /* End PBXBuildFile section */
 
@@ -803,6 +804,7 @@
 		DA86B23D6340FE2E79A8B79A /* FLEXNotificationRegistration.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FLEXNotificationRegistration.m; path = Classes/GlobalStateExplorers/NotificationObservers/FLEXNotificationRegistration.m; sourceTree = "<group>"; };
 		DC851F5C8E2DE3FB9CEF81EE /* FLEXGlobalsEntryTests.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = FLEXGlobalsEntryTests.m; sourceTree = "<group>"; };
 		9CCDDBE96FEF47E99DB7B576 /* FLEXTableContentViewControllerTests.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = FLEXTableContentViewControllerTests.m; sourceTree = "<group>"; };
+		DC0E33BA24554C24A15D4774 /* FLEXRuntimeSafetyTests.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = FLEXRuntimeSafetyTests.m; sourceTree = "<group>"; };
 		E1C1AEC9E7B81EEF0EA24CF3 /* UITableViewCell+FLEX.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+FLEX.m"; sourceTree = "<group>"; };
 		FA54FAC28F802D05BB80F5DA /* FLEXNotificationObserverSection.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FLEXNotificationObserverSection.m; path = Classes/GlobalStateExplorers/NotificationObservers/FLEXNotificationObserverSection.m; sourceTree = "<group>"; };
 		FCB19544249302532D39E227 /* FLEXFileBrowserCell.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = FLEXFileBrowserCell.m; sourceTree = "<group>"; };
@@ -843,6 +845,7 @@
 				5B487F8AB7AE02CACE1068ED /* FLEXNotificationMonitorTests.m */,
 				DC851F5C8E2DE3FB9CEF81EE /* FLEXGlobalsEntryTests.m */,
 				9CCDDBE96FEF47E99DB7B576 /* FLEXTableContentViewControllerTests.m */,
+				DC0E33BA24554C24A15D4774 /* FLEXRuntimeSafetyTests.m */,
 			);
 			path = FLEXTests;
 			sourceTree = "<group>";
@@ -1914,6 +1917,7 @@
 				399EE9D88AB54748D3A58A61 /* FLEXNotificationMonitorTests.m in Sources */,
 				D9C33DC9E8C61D77A96EC73C /* FLEXGlobalsEntryTests.m in Sources */,
 				9AAB575CDDE54DF9BDD5BBBC /* FLEXTableContentViewControllerTests.m in Sources */,
+				5990F23834374C13974443BD /* FLEXRuntimeSafetyTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name             = "fleXD"
-  spec.version          = "6.1.0"
+  spec.version          = "6.2.0"
   spec.summary          = "A set of in-app debugging and exploration tools for iOS — a maintained fork of FLEX."
   spec.description      = <<-DESC
                         fleXD is a fork of FLEX, modernized for current iOS.

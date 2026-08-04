@@ -11,23 +11,26 @@
 @implementation FLEXNetworkCurlLogger
 
 + (NSString *)curlCommandString:(NSURLRequest *)request {
-    __block NSMutableString *curlCommandString = [NSMutableString stringWithFormat:@"curl -v -X %@ ", request.HTTPMethod];
+    __block NSMutableArray<NSString *> *components = [NSMutableArray new];
+    [components addObject:[NSString stringWithFormat:@"curl -v -X %@", request.HTTPMethod]];
 
-    [curlCommandString appendFormat:@"\'%@\' ", request.URL.absoluteString];
+    [components addObject:[NSString stringWithFormat:@"\'%@\'", request.URL.absoluteString]];
 
     [request.allHTTPHeaderFields enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *val, BOOL *stop) {
-        [curlCommandString appendFormat:@"-H \'%@: %@\' ", key, val];
+        [components addObject:[NSString stringWithFormat:@"-H \'%@: %@\'", key, val]];
     }];
 
     NSArray<NSHTTPCookie *> *cookies = [NSHTTPCookieStorage.sharedHTTPCookieStorage cookiesForURL:request.URL];
-    if (cookies) {
-        [curlCommandString appendFormat:@"-H \'Cookie:"];
+    if (cookies.count) {
+        NSMutableString *cookieString = [NSMutableString stringWithString:@"-H \'Cookie:"];
         for (NSHTTPCookie *cookie in cookies) {
-            [curlCommandString appendFormat:@" %@=%@;", cookie.name, cookie.value];
+            [cookieString appendFormat:@" %@=%@;", cookie.name, cookie.value];
         }
-        [curlCommandString appendFormat:@"\' "];
+        [cookieString appendString:@"\'"];
+        [components addObject:cookieString];
     }
 
+    NSString *prefix = @"";
     if (request.HTTPBody) {
         NSData *bodyData = request.HTTPBody;
         if ([FLEXUtility hasCompressedContentEncoding:request]) {
@@ -36,18 +39,18 @@
         NSString *body = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];
 
         if (body != nil) {
-            [curlCommandString appendFormat:@"-d \'%@\'", body];
+            [components addObject:[NSString stringWithFormat:@"-d \'%@\'", body]];
         } else {
             // Fallback to using base64 encoding
-            [curlCommandString appendString:@"--data-binary @-"];
+            [components addObject:@"--data-binary @-"];
 
             NSString *base64 = [request.HTTPBody base64EncodedStringWithOptions:0];
-            NSString *prefix = [NSString stringWithFormat:@"echo -n '%@' | base64 -D | ", base64];
-            [curlCommandString insertString:prefix atIndex:0];
+            prefix = [NSString stringWithFormat:@"echo -n '%@' | base64 -D | ", base64];
         }
     }
 
-    return curlCommandString;
+    // Join with shell line continuations so the command stays readable
+    return [prefix stringByAppendingString:[components componentsJoinedByString:@" \\\n  "]];
 }
 
 @end

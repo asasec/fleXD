@@ -49,9 +49,9 @@ NS_ASSUME_NONNULL_BEGIN
 ///        Required for deleting rows. Required for adding rows if `tableName` is supplied.
 + (instancetype)columns:(NSArray<NSString *> *)columnNames
                    rows:(NSArray<NSArray<NSString *> *> *)rowData
-                 rowIDs:(NSArray<NSString *> *)rowIDs
-              tableName:(NSString *)tableName
-               database:(id<FLEXDatabaseManager>)databaseManager;
+                 rowIDs:(nullable NSArray<NSString *> *)rowIDs
+              tableName:(nullable NSString *)tableName
+               database:(nullable id<FLEXDatabaseManager>)databaseManager;
 
 /// Display an immutable table with the given columns and rows.
 + (instancetype)columns:(NSArray<NSString *> *)columnNames

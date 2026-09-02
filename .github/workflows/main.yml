@@ -1,0 +1,79 @@
+name: Build Multi-Tool
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          brew install ldid xz make
+
+      - name: Clone Theos
+        run: |
+          git clone --recursive https://github.com/theos/theos.git $HOME/theos
+
+      - name: Setup Theos
+        run: |
+          echo "THEOS=$HOME/theos" >> $GITHUB_ENV
+          echo "PATH=$HOME/theos/bin:$PATH" >> $GITHUB_PATH
+
+      - name: Check environment
+        run: |
+          echo "========================================"
+          echo "Theos / Xcode Environment"
+          echo "========================================"
+
+          echo "THEOS=$HOME/theos"
+
+          $HOME/theos/bin/nic.pl --version || true
+
+          echo "----------------------------------------"
+          xcodebuild -version
+
+          echo "----------------------------------------"
+          clang --version
+
+          echo "========================================"
+
+      - name: Clean previous build
+        run: |
+          make clean
+
+      - name: Build package
+        run: |
+          make package FINALPACKAGE=1
+
+      - name: Find generated package
+        run: |
+          echo "========================================"
+          echo "Generated packages"
+          echo "========================================"
+          mv packages/*.deb packages/asasec-MultiTool.deb
+          find packages -type f -name "*.deb" -print
+
+          echo "========================================"
+
+      - name: Verify package
+        run: |
+          COUNT=$(find packages -type f -name "*.deb" | wc -l | tr -d ' ')
+
+          if [ "$COUNT" -eq 0 ]; then
+            echo "ERROR: No .deb package was generated."
+            exit 1
+          fi
+
+          echo "Package count: $COUNT"
+
+      - name: Upload Debian package
+        uses: actions/upload-artifact@v4
+        with:
+          name: AsasecFX
+          path: packages/*.deb
+          if-no-files-found: error

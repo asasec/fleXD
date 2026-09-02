@@ -7,6 +7,7 @@ FLEX_FILES = $(shell find Classes -type f \( -name "*.m" -o -name "*.mm" -o -nam
 
 AsasecFX_FILES = $(FLEX_FILES)
 
-AsasecFX_CFLAGS = -fobjc-arc
+# -I Classes/Headers eklenerek alt klasörlerdeki .h dosyalarının bulunması sağlanır
+AsasecFX_CFLAGS = -fobjc-arc -IClasses/Headers
 
 include $(THEOS_MAKE_PATH)/tweak.mk
